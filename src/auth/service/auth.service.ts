@@ -1,4 +1,3 @@
-
 import { FindOneOptions } from 'typeorm';
 import { User } from 'src/users/entities/user.entity';
 import {
@@ -7,15 +6,15 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { UsersService } from 'src/users/users.service';
-import { RegisterDto } from './dto/register.dto';
+import { RegisterDto } from '../dto/register.dto';
 import { JwtService } from '@nestjs/jwt';
 import * as bcryptjs from 'bcryptjs';
-import { LoginDto } from './dto/login.dto';
-import { RequestResetPasswordDto } from './dto/request-reset-password.dto';
+import { LoginDto } from '../dto/login.dto';
+import { RequestResetPasswordDto } from '../dto/request-reset-password.dto';
 import * as nodemailer from 'nodemailer';
 import { v4 } from 'uuid';
-import { ResetPasswordDto } from './dto/reset-password.dto';
-
+import { ResetPasswordDto } from '../dto/reset-password.dto';
+import {validateRut} from "../functions/validate-rut";
 
 @Injectable()
 export class AuthService {
@@ -24,7 +23,17 @@ export class AuthService {
     private readonly jwtService: JwtService,
   ) {}
 
-  async register({ name, lastName , email, password }: RegisterDto) {
+  async register({ rut, name, lastName , email, password }: RegisterDto) {
+    const userRut = await this.usersService.findOneByRut(rut);
+    const rutValido = await this.isValidRut(rut);
+    if (!rutValido) {
+      throw new BadRequestException('RUT inválido');
+    }
+
+    if (userRut) {
+      throw new BadRequestException('User Rut already exists');
+    }
+
     const user = await this.usersService.findOneByEmail(email);
 
     if (user) {
@@ -32,6 +41,7 @@ export class AuthService {
     }
 
     await this.usersService.create({
+      rut,
       name,
       lastName,
       email,
@@ -78,8 +88,8 @@ export class AuthService {
     const transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
-        user: 'kuky2881@gmail.com', // tu correo electrónico
-        pass: 'ajkpfynfdsigqgqy', // tu contraseña de correo electrónico
+        user: 'kuky2881@gmail.com', 
+        pass: 'ajkpfynfdsigqgqy', 
       },
     });
 
@@ -115,5 +125,8 @@ export class AuthService {
       throw new BadRequestException('Invalid or expired token');
     }
   }
+    async isValidRut(rut: string): Promise<boolean> {
+      return validateRut(rut);
+    }
 
 }

@@ -1,6 +1,6 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository, FindOneOptions } from 'typeorm';
+import { Repository, FindOneOptions  } from 'typeorm';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
@@ -12,40 +12,44 @@ export class UsersService {
     private readonly userRepository: Repository<User>,
   ) {}
 
-  create(createUserDto: CreateUserDto) {
+  async create(createUserDto: CreateUserDto): Promise<User> {
     return this.userRepository.save(createUserDto);
   }
 
-  findOneByEmail(email: string) {
-    return this.userRepository.findOneBy({ email });
+  async findOneByEmail(email: string): Promise<User | undefined> {
+    return this.userRepository.findOne({ where: { email } });
   }
 
-  findByEmailWithPassword(email: string) {
+  async findByEmailWithPassword(email: string): Promise<User | undefined> {
     return this.userRepository.findOne({
       where: { email },
-      select: ['id', 'name', 'email', 'password', 'role'],
+      select: ['id', 'rut' ,'name', 'email', 'password', 'role'],
     });
   }
 
-  findAll() {
+  async findOneByRut(rut: string): Promise<User | undefined> {
+    return this.userRepository.findOne({ where: { rut } });
+  }
+
+  findAll(): Promise<User[]> {
     return this.userRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} user`;
+  async findOne(id: number): Promise<User | undefined> {
+    return await this.userRepository.findOne({ where: { id } });
   }
-
-  async update(id: number, data: Partial<User>): Promise<void> {
+  
+  async update(id: number, data: Partial<User>): Promise<User> {
     await this.userRepository.update(id, data);
+    return this.findOne(id);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} user`;
+  async remove(id: number): Promise<void> {
+    const user = await this.findOne(id);
+    await this.userRepository.remove(user);
   }
 
   async findByResetPasswordToken(token: string): Promise<User | undefined> {
-    return await this.userRepository.findOne({ where: { resetPasswordToken: token } } as FindOneOptions<User>);
-
+    return this.userRepository.findOne({ where: { resetPasswordToken: token } });
   }
-
 }

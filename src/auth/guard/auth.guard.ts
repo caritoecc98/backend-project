@@ -4,40 +4,41 @@ import {
     Injectable,
     UnauthorizedException,
   } from '@nestjs/common';
-  import { JwtService } from '@nestjs/jwt';
-  import { Request } from 'express';
-  import { jwtConstants } from '../constants/jwt.constant';
-  
-  @Injectable()
-  export class AuthGuard implements CanActivate {
-    constructor(private readonly jwtService: JwtService) {}
-  
-    async canActivate(context: ExecutionContext): Promise<boolean> {
-      const request = context.switchToHttp().getRequest();
-      const token = this.extractTokenFromHeader(request);
+import { GqlExecutionContext } from '@nestjs/graphql';
+import { JwtService } from '@nestjs/jwt';
+import { jwtConstants } from '../constants/jwt.constant';
 
-      if (!token) {
-        throw new UnauthorizedException();
-      }
-  
-      try {
-        const payload = await this.jwtService.verifyAsync(
-          token, 
-          {
-          secret: jwtConstants.secret,
-        });
-        
-        request.user = payload;
+@Injectable()
+export class AuthGuard implements CanActivate {
+  constructor(private readonly jwtService: JwtService) {}
 
-      } catch {
-        throw new UnauthorizedException();
-      }
-  
-      return true;
+  async canActivate(context: ExecutionContext): Promise<boolean> {
+    const gqlContext = GqlExecutionContext.create(context);
+    const { req } = gqlContext.getContext();
+
+    const token = this.extractTokenFromHeader(req);
+
+    if (!token) {
+      throw new UnauthorizedException();
     }
-  
-    private extractTokenFromHeader(request: Request): string | undefined {
-      const [type, token] = request.headers.authorization?.split(' ') ?? [];
-      return type === 'Bearer' ? token : undefined;
+
+    try {
+      const payload = await this.jwtService.verifyAsync(token, {
+        secret: jwtConstants.secret,
+      });
+      req.user = payload;
+    } catch {
+      throw new UnauthorizedException();
     }
+
+    return true;
   }
+
+  private extractTokenFromHeader(request: any): string | undefined {
+    const authorization = request.headers.authorization;
+    if (authorization && authorization.split(' ')[0] === 'Bearer') {
+      return authorization.split(' ')[1];
+    }
+    return undefined;
+  }
+}

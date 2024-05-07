@@ -1,7 +1,7 @@
 import { Body, Controller, HttpCode, HttpStatus, Post, Patch,Query } from "@nestjs/common";
 import { LoginDto } from "./dto/login.dto";
 import { RegisterDto } from "./dto/register.dto";
-import { AuthService } from "./auth.service";
+import { AuthService } from "./service/auth.service";
 import { RequestResetPasswordDto } from "./dto/request-reset-password.dto";
 import { ResetPasswordDto } from "./dto/reset-password.dto";
 

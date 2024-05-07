@@ -1,6 +1,8 @@
 import { Transform } from "class-transformer";
 import { IsString, MinLength, Matches } from 'class-validator';
+import { Field, InputType } from '@nestjs/graphql';
 
+@InputType()
 export class ResetPasswordDto {
   //@IsString()
   //@MinLength(6,{ message: 'La contraseña debe tener al menos 6 caracteres' })
@@ -14,6 +16,7 @@ export class ResetPasswordDto {
   @Transform(({ value }) => value.trim())
   @Matches(/[A-Z]/, { message: 'La contraseña debe contener al menos una letra mayúscula' })
   @Matches(/^[^\u00C0-\u017F\s]+$/,{ message: 'La contraseña no debe contener tildes' })
+  @Field()
   newPassword: string;
   
 }

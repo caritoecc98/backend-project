@@ -1,0 +1,95 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type User {
+  id: Int!
+  rut: String!
+  name: String!
+  lastName: String!
+  email: String!
+  password: String!
+  resetPasswordToken: String!
+  role: String!
+  deletedAt: DateTime!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type Profession {
+  id: ID!
+  name: String!
+  category: String!
+}
+
+type Query {
+  getAllUsers: [User!]!
+  getUserById(id: Float!): [User!]!
+  findAll: [Profession!]!
+  findOne(id: Int!): Profession!
+  findOneByName(name: String!): Profession!
+  findOneByCategory(category: String!): Profession!
+}
+
+type Mutation {
+  createUser(input: CreateUserDto!): User!
+  updateUser(id: String!, input: UpdateUserDto!): User!
+  deleteUser(id: String!): User!
+  register(registerInput: RegisterDto!): String!
+  login(loginInput: LoginDto!): String!
+  requestResetPassword(requestResetPasswordInput: RequestResetPasswordDto!): String!
+  resetPassword(token: String!, resetPasswordInput: ResetPasswordDto!): String!
+  createProfession(createProfessionDto: CreateProfessionDto!): Profession!
+  updateProfession(id: Int!, updateProfessionDto: UpdateProfessionDto!): Profession!
+  removeProfession(id: Int!): Profession!
+}
+
+input CreateUserDto {
+  rut: String!
+  name: String!
+  lastName: String!
+  email: String!
+  password: String!
+}
+
+input UpdateUserDto {
+  rut: String!
+  name: String!
+  lastName: String!
+  newPassword: String!
+  resetPasswordToken: String!
+}
+
+input RegisterDto {
+  rut: String!
+  name: String!
+  lastName: String!
+  email: String!
+  password: String!
+}
+
+input LoginDto {
+  email: String!
+  password: String!
+}
+
+input RequestResetPasswordDto {
+  email: String!
+}
+
+input ResetPasswordDto {
+  newPassword: String!
+}
+
+input CreateProfessionDto {
+  name: String!
+  category: String!
+}
+
+input UpdateProfessionDto {
+  name: String
+  category: String
+}
