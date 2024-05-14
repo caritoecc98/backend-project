@@ -7,6 +7,7 @@ import { User } from './users/entities/user.entity';
 import { ProfessionModule } from './profession/profession.module';
 import { Profession } from './profession/entities/profession.entity';
 import {  ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
+import { PruebaModule } from './prueba/prueba.module';
 
 @Module({
   imports: [
@@ -18,16 +19,17 @@ import {  ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
       type: 'postgres',
       host: 'localhost',
       port: 5432,
-      password: 'password',
+      password: 'olafkeashe1',
       username: 'postgres',
       entities: [User,Profession],
-      database: 'bd_users',
+      database: 'proyectoqlo',
       synchronize: true,
       logging: true,
     }),
     UsersModule,
     AuthModule,
     ProfessionModule,
+    PruebaModule,
   ],
   controllers: [],
   providers: [],
