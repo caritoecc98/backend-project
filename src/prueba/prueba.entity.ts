@@ -4,9 +4,9 @@ export enum pruebaStatus {
     finshed = 'terminado',
 
 }
-export class Prueba{
+export class Prueba {
     id: string
-    name: string 
+    name: string
     status: pruebaStatus
     description: string
 }
