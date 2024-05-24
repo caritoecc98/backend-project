@@ -4,7 +4,6 @@
 
 type User {
   id: Int!
-  rut: String!
   name: String!
   lastName: String!
   email: String!
@@ -27,7 +26,7 @@ type Profession {
 
 type Query {
   getAllUsers: [User!]!
-  getUserById(id: Float!): [User!]!
+  getUserById(id: Float!): User!
   findAll: [Profession!]!
   findOne(id: Int!): Profession!
   findOneByName(name: String!): Profession!
@@ -36,8 +35,8 @@ type Query {
 
 type Mutation {
   createUser(input: CreateUserDto!): User!
-  updateUser(id: String!, input: UpdateUserDto!): User!
-  deleteUser(id: String!): User!
+  updateUser(id: Float!, input: UpdateUserDto!): User!
+  deleteUser(id: Float!): User!
   register(registerInput: RegisterDto!): String!
   login(loginInput: LoginDto!): String!
   requestResetPassword(requestResetPasswordInput: RequestResetPasswordDto!): String!
@@ -48,7 +47,6 @@ type Mutation {
 }
 
 input CreateUserDto {
-  rut: String!
   name: String!
   lastName: String!
   email: String!
@@ -56,7 +54,6 @@ input CreateUserDto {
 }
 
 input UpdateUserDto {
-  rut: String!
   name: String!
   lastName: String!
   newPassword: String!
@@ -64,7 +61,6 @@ input UpdateUserDto {
 }
 
 input RegisterDto {
-  rut: String!
   name: String!
   lastName: String!
   email: String!

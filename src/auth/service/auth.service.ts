@@ -23,7 +23,9 @@ export class AuthService {
     private readonly jwtService: JwtService,
   ) {}
 
-  async register({ rut, name, lastName , email, password }: RegisterDto) {
+  async register({ name, lastName , email, password }: RegisterDto) {
+/*
+
     const userRut = await this.usersService.findOneByRut(rut);
     const rutValido = await this.isValidRut(rut);
     if (!rutValido) {
@@ -33,7 +35,7 @@ export class AuthService {
     if (userRut) {
       throw new BadRequestException('User Rut already exists');
     }
-
+*/
     const user = await this.usersService.findOneByEmail(email);
 
     if (user) {
@@ -41,7 +43,7 @@ export class AuthService {
     }
 
     await this.usersService.create({
-      rut,
+//      rut,
       name,
       lastName,
       email,

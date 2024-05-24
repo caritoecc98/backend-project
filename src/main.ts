@@ -6,14 +6,12 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   app.enableCors({
-    origin: 'http://192.168.0.111:8081',
+    origin: 'http://localhost:3000',
     // cors
   });
   
   app.enableCors();
   
-  app.setGlobalPrefix('api/v1');
-
   app.useGlobalPipes(
     new ValidationPipe({
       //whitelist: true,
@@ -22,6 +20,6 @@ async function bootstrap() {
     }),
   );
 
-  await app.listen(3000, ()=>console.log("is running"));
+  await app.listen(3001, ()=>console.log("is running"));
 }
 bootstrap();

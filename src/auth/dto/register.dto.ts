@@ -4,10 +4,10 @@ import { Field, InputType } from '@nestjs/graphql';
 
 @InputType()
 export class RegisterDto {
-  @IsNotEmpty()
-  @IsString()
-  @Field()
-  rut:string;
+//  @IsNotEmpty()
+ // @IsString()
+//  @Field()
+  //rut:string;
 
   @IsNotEmpty()
   @IsString()

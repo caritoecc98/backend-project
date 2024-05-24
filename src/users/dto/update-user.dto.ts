@@ -3,9 +3,9 @@ import { InputType, Field } from '@nestjs/graphql';
 
 @InputType()
 export class UpdateUserDto {
-  @IsString()
-  @Field()
-  rut:string;
+//  @IsString()
+//  @Field()
+//  rut:string;
 
   @IsString()
   @Field()
