@@ -4,14 +4,13 @@ import { RegisterDto } from 'src/auth/dto/register.dto';
 import { LoginDto } from 'src/auth/dto/login.dto';
 import { RequestResetPasswordDto } from 'src/auth/dto/request-reset-password.dto';
 import { ResetPasswordDto } from 'src/auth/dto/reset-password.dto';
-import { User } from 'src/users/entities/user.entity';
 
 @Resolver()
 export class AuthResolver {
   constructor(private readonly authService: AuthService) {}
 
-  @Mutation(() => User) 
-  async register(@Args('registerInput') registerInput: RegisterDto): Promise<User> { 
+  @Mutation(() => String) 
+  async register(@Args('registerInput') registerInput: RegisterDto) {
     return this.authService.register(registerInput);
   }
 
