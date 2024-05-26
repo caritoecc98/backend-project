@@ -22,10 +22,27 @@ export class AuthService {
     private readonly usersService: UsersService,
     private readonly jwtService: JwtService,
   ) {}
+  
+  async register(registerInput: RegisterDto): Promise<User> { 
+    const { name, lastName, email, password } = registerInput;
 
-  async register({ name, lastName , email, password }: RegisterDto) {
-/*
+    const userExists = await this.usersService.findOneByEmail(email);
+    if (userExists) {
+      throw new BadRequestException('User already exists');
+    }
 
+    const newUser = await this.usersService.create({
+      name,
+      lastName,
+      email,
+      password: await bcryptjs.hash(password, 10),
+    });
+
+    return newUser;
+  }
+  
+  /*
+  async register({ rut, name, lastName , email, password }: RegisterDto) {
     const userRut = await this.usersService.findOneByRut(rut);
     const rutValido = await this.isValidRut(rut);
     if (!rutValido) {
@@ -35,7 +52,7 @@ export class AuthService {
     if (userRut) {
       throw new BadRequestException('User Rut already exists');
     }
-*/
+
     const user = await this.usersService.findOneByEmail(email);
 
     if (user) {
@@ -43,19 +60,18 @@ export class AuthService {
     }
 
     await this.usersService.create({
-//      rut,
+      rut,
       name,
       lastName,
       email,
       password: await bcryptjs.hash(password, 10),
     });
-
     return {
       name,
       email,
     };
   }
-
+*/
   async login({ email, password }: LoginDto) {
     const user = await this.usersService.findByEmailWithPassword(email);
     if (!user) {
@@ -127,8 +143,8 @@ export class AuthService {
       throw new BadRequestException('Invalid or expired token');
     }
   }
-    async isValidRut(rut: string): Promise<boolean> {
-      return validateRut(rut);
-    }
+    //async isValidRut(rut: string): Promise<boolean> {
+    //  return validateRut(rut);
+   // }
 
 }
