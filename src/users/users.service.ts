@@ -23,13 +23,14 @@ export class UsersService {
   async findByEmailWithPassword(email: string): Promise<User | undefined> {
     return this.userRepository.findOne({
       where: { email },
-      select: ['id', 'rut' ,'name', 'email', 'password', 'role'],
+      //select: ['id','name','rut', 'email', 'password', 'role'],
+      select: ['id','name', 'email', 'password', 'role'],
     });
   }
 
-  async findOneByRut(rut: string): Promise<User | undefined> {
-    return this.userRepository.findOne({ where: { rut } });
-  }
+  //async findOneByRut(rut: string): Promise<User | undefined> {
+    //return this.userRepository.findOne({ where: { rut } });
+  //}
 
   findAll(): Promise<User[]> {
     return this.userRepository.find();

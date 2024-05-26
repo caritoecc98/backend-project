@@ -13,9 +13,9 @@ import { ObjectType, Field, Int, Directive } from '@nestjs/graphql';
     @Field((type) => Int)
     id: number;
 
-    @Field()
-    @Column()
-    rut: string;
+    //@Field()
+    //@Column()
+    //rut: string;
 
     @Field()
     @Column()

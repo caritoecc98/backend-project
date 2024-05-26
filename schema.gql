@@ -4,7 +4,6 @@
 
 type User {
   id: Int!
-  rut: String!
   name: String!
   lastName: String!
   email: String!
@@ -38,7 +37,7 @@ type Mutation {
   createUser(input: CreateUserDto!): User!
   updateUser(id: String!, input: UpdateUserDto!): User!
   deleteUser(id: String!): User!
-  register(registerInput: RegisterDto!): String!
+  register(registerInput: RegisterDto!): User!
   login(loginInput: LoginDto!): String!
   requestResetPassword(requestResetPasswordInput: RequestResetPasswordDto!): String!
   resetPassword(token: String!, resetPasswordInput: ResetPasswordDto!): String!
@@ -48,7 +47,6 @@ type Mutation {
 }
 
 input CreateUserDto {
-  rut: String!
   name: String!
   lastName: String!
   email: String!
@@ -56,7 +54,6 @@ input CreateUserDto {
 }
 
 input UpdateUserDto {
-  rut: String!
   name: String!
   lastName: String!
   newPassword: String!
@@ -64,7 +61,6 @@ input UpdateUserDto {
 }
 
 input RegisterDto {
-  rut: String!
   name: String!
   lastName: String!
   email: String!
