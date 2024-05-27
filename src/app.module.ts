@@ -18,7 +18,7 @@ import {  ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
       type: 'postgres',
       host: 'localhost',
       port: 5432,
-      password: 'password',
+      password: 'postgres',
       username: 'postgres',
       entities: [User,Profession],
       database: 'bd_users',
