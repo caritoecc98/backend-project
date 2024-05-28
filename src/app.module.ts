@@ -21,7 +21,7 @@ import {  ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
       password: 'postgres',
       username: 'postgres',
       entities: [User,Profession],
-      database: 'bd_users',
+      database: 'postgres',
       synchronize: true,
       logging: true,
       
