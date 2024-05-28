@@ -26,7 +26,7 @@ type Profession {
 
 type Query {
   getAllUsers: [User!]!
-  getUserById(id: Float!): User!
+  getUserById(id: Float!): [User!]!
   findAll: [Profession!]!
   findOne(id: Int!): Profession!
   findOneByName(name: String!): Profession!
@@ -35,9 +35,9 @@ type Query {
 
 type Mutation {
   createUser(input: CreateUserDto!): User!
-  updateUser(id: Float!, input: UpdateUserDto!): User!
-  deleteUser(id: Float!): User!
-  register(registerInput: RegisterDto!): String!
+  updateUser(id: String!, input: UpdateUserDto!): User!
+  deleteUser(id: String!): User!
+  register(registerInput: RegisterDto!): User!
   login(loginInput: LoginDto!): String!
   requestResetPassword(requestResetPasswordInput: RequestResetPasswordDto!): String!
   resetPassword(token: String!, resetPasswordInput: ResetPasswordDto!): String!

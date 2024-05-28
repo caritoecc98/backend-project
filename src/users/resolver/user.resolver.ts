@@ -8,31 +8,28 @@ import { User } from '../entities/user.entity';
 export class UserResolver {
   constructor(private readonly usersService: UsersService) {}
 
-  @Query(() => [User])
-  async getAllUsers(): Promise<User[]> {
-    return this.usersService.findAll();
-  }
-
-  @Query(returns => User)
-  async getUserById(@Args('id') id: number): Promise<User> {
-    return this.usersService.findOne(id);
-  }
-
   @Mutation(() => User)
   async createUser(@Args('input') input: CreateUserDto) {
     return this.usersService.create(input);
   }
 
+  @Query(() => [User])
+  async getAllUsers() {
+    return this.usersService.findAll();
+  }
+
+  @Query(() => [User])
+  async getUserById(@Args('id') id: number) {
+    return this.usersService.findOne(id);
+  }
+  
   @Mutation(() => User) 
-  async updateUser(
-    @Args('id') id: number,
-    @Args('input') input: UpdateUserDto,
-  ): Promise<User> {
+  async updateUser(@Args('id') id: string, @Args('input') input: UpdateUserDto) {
     return this.usersService.update(+id, input);
   }
 
   @Mutation(() => User) 
-  async deleteUser(@Args('id') id: number) {
-    return this.usersService.remove(id);
+  async deleteUser(@Args('id') id: string) {
+    return this.usersService.remove(+id);
   }
 }
