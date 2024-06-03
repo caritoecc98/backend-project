@@ -5,6 +5,9 @@ import {
     PrimaryGeneratedColumn,
   } from 'typeorm';
 import { ObjectType, Field, Int, Directive } from '@nestjs/graphql';
+import { Reservation } from 'src/reservation/entinty/reservation.entity';
+import { Profession } from 'src/profession/entities/profession.entity';
+import { OneToMany } from 'typeorm';
 
 @Entity()
 @ObjectType()
@@ -12,10 +15,6 @@ import { ObjectType, Field, Int, Directive } from '@nestjs/graphql';
     @PrimaryGeneratedColumn()
     @Field((type) => Int)
     id: number;
-
-    //@Field()
-    //@Column()
-    //rut: string;
 
     @Field()
     @Column()
@@ -49,5 +48,12 @@ import { ObjectType, Field, Int, Directive } from '@nestjs/graphql';
     @Field()
     @DeleteDateColumn()
     deletedAt: Date;
+
+    @OneToMany(() => Reservation, (reservation) => reservation.user)
+    @Field((type) => [Reservation])
+    reservations: Reservation[];
     
+    @OnteToMany(() => Profession, (profession) => profession.name)
+    @Field((type) => [Profession])
+    professions: Profession[];
   }
