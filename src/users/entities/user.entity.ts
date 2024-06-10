@@ -48,12 +48,14 @@ import { OneToMany } from 'typeorm';
     @Field()
     @DeleteDateColumn()
     deletedAt: Date;
-
+   /** 
     @OneToMany(() => Reservation, (reservation) => reservation.user)
     @Field((type) => [Reservation])
     reservations: Reservation[];
-    
+  
     @OnteToMany(() => Profession, (profession) => profession.name)
     @Field((type) => [Profession])
     professions: Profession[];
+     */
+
   }

@@ -9,7 +9,7 @@ export class Reservation {
   @PrimaryGeneratedColumn()
   @Field((type) => Int)
   id: number;
-
+/*
   @ManyToOne(() => User, (user) => user.reservations)
   @Field((type) => User)
   user: User;
@@ -17,7 +17,7 @@ export class Reservation {
   @ManyToOne(() => Profession, (profession) => profession.reservations)
   @Field((type) => Profession)
   profession: Profession;
-
+*/
   @Field()
   @Column()
   date: Date;
