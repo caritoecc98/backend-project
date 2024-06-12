@@ -7,6 +7,8 @@ import { User } from './users/entities/user.entity';
 import { ProfessionModule } from './profession/profession.module';
 import { Profession } from './profession/entities/profession.entity';
 import {  ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
+import { PrismaModule } from './prisma/prisma.module';
+
 
 @Module({
   imports: [
@@ -29,6 +31,7 @@ import {  ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
     UsersModule,
     AuthModule,
     ProfessionModule,
+    PrismaModule,
   ],
   controllers: [],
   providers: [],

@@ -4,12 +4,14 @@ import { Repository, FindOneOptions  } from 'typeorm';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
+import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class UsersService {
   constructor(
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
+    private readonly prismaService: PrismaService
   ) {}
 
   async create(createUserDto: CreateUserDto): Promise<User> {
@@ -32,8 +34,9 @@ export class UsersService {
     //return this.userRepository.findOne({ where: { rut } });
   //}
 
-  findAll(): Promise<User[]> {
-    return this.userRepository.find();
+  async findAll(): Promise<User[]> {
+    //return this.userRepository.find();
+    return await this.prismaService.users.findMany()
   }
 
   async findOne(id: number): Promise<User | undefined> {

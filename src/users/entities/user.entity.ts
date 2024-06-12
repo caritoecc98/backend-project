@@ -12,6 +12,7 @@ import { OneToMany } from 'typeorm';
 @Entity()
 @ObjectType()
   export class User {
+    
     @PrimaryGeneratedColumn()
     @Field((type) => Int)
     id: number;
